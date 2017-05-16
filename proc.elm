@@ -1,7 +1,9 @@
 import Html
 import Html.Attributes
 import Html.Events
-
+import Http
+import Dict exposing (..)
+import FileReader
 
 main = Html.beginnerProgram {model=model, view=view, update=update}
 
@@ -10,7 +12,9 @@ main = Html.beginnerProgram {model=model, view=view, update=update}
 type alias Model = 
     {img: Image,
     view: View,
-    content: String
+    content: String,
+    desc: String,
+    pix: Dict String String 
     }
                 
                 
@@ -43,18 +47,24 @@ update msg model =
                 Wait ->
                     {model|content = "Waiting"}
         Upload s ->
-            {model|img = Picture "file" "stuff"}
+            {model|img = Picture s "stuff"}
 
 
 ---VIEW---
 
 view model =
-    Html.div [Html.Attributes.class "meow"] 
-    [headerButton "Label" (ViewChange Label) model, 
+    Html.div [Html.Attributes.class "meow"]
+    [Html.div [Html.Attributes.class "container"]  
+    [Html.img [Html.Attributes.height 390, Html.Attributes.src "whooo", Html.Attributes.alt "Valid image required"] [],
+    Html.div [] [],
+    Html.button [Html.Attributes.class "choosebutt", Html.Events.onClick (Upload "file")] [Html.text "Choose file"],
+    Html.div [] [],
+    Html.div [Html.Attributes.class "head"] [
+    headerButton "Label" (ViewChange Label) model, 
     headerButton "Text" (ViewChange Text) model,
-    headerButton "Face" (ViewChange Face) model,
-    Html.div [Html.Attributes.class "body"] [Html.div [Html.Attributes.class "container"] [Html.text "There will be an image or placeholder here someday"], Html.div[Html.Attributes.class "container"] [Html.text model.content] ],
-    Html.node "link" [ Html.Attributes.rel "stylesheet", Html.Attributes.href "style.css" ] []]
+    headerButton "Face" (ViewChange Face) model],
+    Html.div [Html.Attributes.class "body"]  [Html.text model.content],
+    Html.node "link" [ Html.Attributes.rel "stylesheet", Html.Attributes.href "style.css" ] []]]
 
 
 ---HTML
@@ -65,4 +75,4 @@ headerButton s m model=
 
 --INIT--
 
-model = Model (Waiting) (Wait) "There will be attribute descriptions or a prompt for an image here someday"
+model = Model (Waiting) (Wait) "There will be attribute descriptions or a prompt for an image here someday" "" Dict.empty

@@ -1,5 +1,43 @@
 .meow{
     text-align: center;
+    background-color:#5E35B1;
+    margin: none;
+    padding: none;
+    height: 100%;
+}
+
+.choosebutt{
+    background-color: #651FFF;
+    color: #EDE7F6;
+    border: 2px solid #EDE7F6;
+    padding: 10px 25px;
+    text-align:center;
+    display: inline block;
+    font-size: 15px;
+    margin=10px;
+    cursor:pointer;
+    box-shadow:0px 0px 1px  #D1C4E9;
+
+}
+
+.choosebutt:hover{
+    background-color: #7C4DFF;
+    
+        
+}
+
+.choosebutt:active{
+    background-color: #6200EA;
+    color: #D1C4E9;
+}
+
+.head{
+    box-shadow: 0px 2px 2.5px 0.5px #D1C4E9;
+    display: inline-block;
+    width: auto;
+    height: auto;
+    margin: 3px 0px 10px 0px;
+    padding: none;
 }
 
 .headbutt{
@@ -8,42 +46,43 @@
     color: #5E35B1;
     padding: 15px 32px;
     text-align:center;
-    text-decoration: none;
-    display: inline block;
     font-size: 18px;
-    margin=10px;
     cursor: pointer;
+    margin: 0px 0px 0px 0px;
 }
 
 .headbutt:hover{
-    background-color:#F3E5F5;
+    background-color:#F5F5F5;
 }
 
 .headbutt:active{
-    /* figure out coloring on click later */
+    background-color: #D1C4E9;
 }
 
 .body{
-    width: 80%;
-    height: 500px;
+    width: 50%;
+    box-shadow:0px 0px 10px #D1C4E9;
+    height: 45%;
     text-align: center;
     margin: auto;
-    border: none;
-    display: -webkit-flex;
-    -webkit-align-items: center;
-    display: flex;
+    margin-bottom: none;
+    border: 1px solid #5E35B1;
+    text-align: center;
+    overflow:auto;
+    word-wrap: break-word;
     padding: 10px;
 }
 
 .container{
-    width: 50%;
-    height: 100%;
-    text-align: left;
-    border: 1px solid #5E35B1;
     font: 17px Verdana;
+    width: 70%;
+    height: 100%;
+    text-align: center;
+    border: none;
     color: #311B92;
-    padding: 10px;
     margin: auto;
+    margin-bottom: none;
+    background-color: white;
 }
 
 
