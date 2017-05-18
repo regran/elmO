@@ -55,7 +55,7 @@ update msg model =
 view model =
     Html.div [Html.Attributes.class "meow"]
     [Html.div [Html.Attributes.class "container"]  
-    [Html.img [Html.Attributes.height 390, Html.Attributes.src "whooo", Html.Attributes.alt "Valid image required"] [],
+    [Html.img [Html.Attributes.class "image", Html.Attributes.src "https://www.royalcanin.com/~/media/Royal-Canin/Product-Categories/cat-adult-landing-hero.ashx", Html.Attributes.alt "Valid image required", Html.Attributes.title "Placeholder image"] [],
     Html.div [] [],
     Html.button [Html.Attributes.class "choosebutt", Html.Events.onClick (Upload "file")] [Html.text "Choose file"],
     Html.div [] [],
