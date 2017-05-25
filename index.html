@@ -1,14 +1,33 @@
 <!DOCTYPE html>
-<html>
+ <html style="padding:0px 0px 0px 0px;margin:0px 0px 0px 0px;">
 <head>
 	<title>Vision</title>
 </head>
-<body style="padding:none;margin:none">
+<body style="padding:0px 0px 0px 0px;margin:0px 0px 0px 0px">
 <div id="main" style="padding:none;margin:none"></div>
 <script src="main.js"></script>
 <script>
-	var node = document.getElementById('main')
-    var app = Elm.Proc.embed(node);
+    var app = Elm.Proc.fullscreen();
+	app.ports.getImage.subscribe(function(id){
+            var node = document.getElementById(id);
+            if (node===null){
+                return;
+            }
+	    //var something = apicall(img);
+            var file = node.files[0];
+            var reader = new FileReader();
+            reader.onload = (function(event){
+                var b64 = event.target.result;
+                var data = {
+                    contents: b64,
+                    name: file.name
+                };
+	        //app.ports.jsonresponse.send(something);
+                app.ports.fileContentRead.send(data);
+            });
+            reader.readAsDataURL(file);
+        });
+	
 </script>
 </body>
 </html>
