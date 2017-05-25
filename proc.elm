@@ -43,6 +43,7 @@ type Msg =
     ViewChange View
     | Get
     | Upload Image
+    | Read String
 
 port getImage : String -> Cmd msg 
 
@@ -63,7 +64,8 @@ update msg model =
             (model, getImage "file")
         Upload data ->
             ({model|img = Just (Image data.contents data.name)}, Cmd.none)
-
+        Read s ->
+            ({model|content=s}, Cmd.none)
 
 ---VIEW---
 
@@ -99,11 +101,11 @@ headerButton s m model=
 --SUBSCRIPTIONS
 
 port fileContentRead : (Image->msg) -> Sub msg
---port jsonresponse : (String -> msg) -> Sub msg
+port jsonresponse : (String -> msg) -> Sub msg
 
 subscriptions: Model -> Sub Msg
 subscriptions model =
-    fileContentRead Upload
+    Sub.batch [fileContentRead Upload, jsonresponse Read]
 
 --INIT--
 init: (Model, Cmd msg)
