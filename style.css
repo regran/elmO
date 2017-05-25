@@ -1,8 +1,9 @@
 .meow{
     text-align: center;
     background-color:#5E35B1;
+    margin: 0px 0px 0px 0px;
     width: 100%;
-    padding: none;
+    padding: 0px 0px 0px 0px;
     height:100%;
     position:fixed;
     overflow: auto;
@@ -65,10 +66,10 @@
 
 .image{
     margin: auto;
-    margin-bottom: 4px;
+    margin-bottom: 5px;
     max-height: 50%;
     border: 1px solid #EDE7F6;
-    box-shadow:0px 0px 2px #D1C4E9;
+    box-shadow:0px 0px 5px 2px #D1C4E9;
 
 }
 
