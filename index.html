@@ -9,12 +9,29 @@
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 <script>
     var app = Elm.Proc.fullscreen();
+        app.ports.dropImage.subscribe(function(id){
+            var db = document.getElementById(id);
+            db.ondragover = db.ondragenter = function(evt){
+                evt.preventDefault();
+                db.classList.add("dropboxhover");
+            };
+            db.ondragleave = function(evt){
+                db.classList.remove("dropboxhover")
+            };
+            db.ondrop = function(evt){
+                improc(evt.dataTransfer.files[0]);
+                evt.preventDefault();
+            };   
+        });
 	app.ports.getImage.subscribe(function(id){
             var node = document.getElementById(id);
             if (node===null){
                 return;
             }
-            var file = node.files[0];
+            var file = node.files[node.files.length-1];
+            improc(file);
+        });
+        function improc(file){
             var reader = new FileReader();
             reader.onload = (function(event){
                 var b64 = event.target.result;
@@ -49,7 +66,7 @@
                 });
             });
             reader.readAsDataURL(file);
-        });
+        }
 	
 </script>
 </body>

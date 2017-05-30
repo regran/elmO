@@ -109,6 +109,21 @@
     -ms-flex-direction: column;
 }
 
+.dropbox{
+    border: 3px dashed #D1C4E9;
+    width: 70%;
+    height: 30%;
+    margin: auto;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
 
+.dropbox:hover{
+    border-color: #B388FF;
+}
+
+.dropboxhover{
+    border-color: #B388FF;
+}
 
 

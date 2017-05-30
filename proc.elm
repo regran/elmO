@@ -23,7 +23,7 @@ type alias Model =
     view: View,
     content: String,
     desc: String,
-    pix: Dict String String 
+    pix: Dict String String
     }
                 
                 
@@ -42,10 +42,12 @@ type View =
 type Msg =
     ViewChange View
     | Get
+    | Drop
     | Upload Image
     | Read String
 
-port getImage : String -> Cmd msg 
+port getImage : String->Cmd msg 
+port dropImage : String->Cmd msg
 
 update: Msg -> Model -> (Model, Cmd msg)
 update msg model =
@@ -62,6 +64,8 @@ update msg model =
                     ({model|content = "Waiting"}, Cmd.none)
         Get ->
             (model, getImage "file")
+        Drop ->
+            (model, dropImage "dropbox")
         Upload data ->
             ({model|img = Just (Image data.contents data.name)}, Cmd.none)
         Read s ->
@@ -70,14 +74,16 @@ update msg model =
 ---VIEW---
 
 view model =
-    let viewImg =
+    let (viewImg, att) =
             case model.img of
                 Nothing ->
-                    Html.text ""
+                    (Html.label [Html.Attributes.for "file", Html.Attributes.class "dropbox", Html.Attributes.id "dropbox"] [],
+                    [Html.Attributes.class "meow", Html.Events.onMouseOver Drop])
                 Just i->
-                    Html.img [Html.Attributes.class "image", Html.Attributes.src i.contents, Html.Attributes.title i.name ] []
+                    (Html.img [Html.Attributes.class "image", Html.Attributes.src i.contents, Html.Attributes.title i.name ] [],
+                     [Html.Attributes.class "meow"])
     in
-        Html.div [Html.Attributes.class "meow"]
+        Html.div att
         [Html.div [Html.Attributes.class "container"]  
         [viewImg,
         Html.div [] [],
