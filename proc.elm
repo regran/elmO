@@ -74,16 +74,14 @@ update msg model =
 ---VIEW---
 
 view model =
-    let (viewImg, att) =
+    let viewImg =
             case model.img of
                 Nothing ->
-                    (Html.label [Html.Attributes.for "file", Html.Attributes.class "dropbox", Html.Attributes.id "dropbox"] [],
-                    [Html.Attributes.class "meow", Html.Events.onMouseOver Drop])
+                    Html.label [Html.Attributes.for "file", Html.Attributes.class "dropbox", Html.Attributes.id "dropbox"] []
                 Just i->
-                    (Html.img [Html.Attributes.class "image", Html.Attributes.src i.contents, Html.Attributes.title i.name ] [],
-                     [Html.Attributes.class "meow"])
+                    Html.img [Html.Attributes.class "image", Html.Attributes.src i.contents, Html.Attributes.title i.name, Html.Attributes.id "dropbox" ] []
     in
-        Html.div att
+        Html.div [Html.Attributes.class "meow", Html.Events.onMouseOver Drop]
         [Html.div [Html.Attributes.class "container"]  
         [viewImg,
         Html.div [] [],
