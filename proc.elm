@@ -79,9 +79,9 @@ view model =
                 Nothing ->
                     Html.label [Html.Attributes.for "file", Html.Attributes.class "dropbox", Html.Attributes.id "dropbox"] []
                 Just i->
-                    Html.img [Html.Attributes.class "image", Html.Attributes.src i.contents, Html.Attributes.title i.name, Html.Attributes.id "dropbox" ] []
+                    Html.img [Html.Attributes.class "image", Html.Attributes.src i.contents, Html.Attributes.title i.name, Html.Attributes.id "dropbox", Html.Events.on "dragenter" (JD.succeed Drop)] []
     in
-        Html.div [Html.Attributes.class "meow", Html.Events.onMouseOver Drop]
+        Html.div [Html.Attributes.class "meow"]
         [Html.div [Html.Attributes.class "container"]  
         [viewImg,
         Html.div [] [],
@@ -113,4 +113,4 @@ subscriptions model =
 
 --INIT--
 init: (Model, Cmd msg)
-init = (Model (Nothing) (Wait) "There will be attribute descriptions or a prompt for an image here someday" "" Dict.empty, Cmd.none)
+init = (Model (Nothing) (Wait) "There will be attribute descriptions or a prompt for an image here someday" "" Dict.empty, dropImage "dropbox")

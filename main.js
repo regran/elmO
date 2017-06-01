@@ -9163,7 +9163,7 @@ var _user$project$Proc$Wait = {ctor: 'Wait'};
 var _user$project$Proc$init = {
 	ctor: '_Tuple2',
 	_0: A5(_user$project$Proc$Model, _elm_lang$core$Maybe$Nothing, _user$project$Proc$Wait, 'There will be attribute descriptions or a prompt for an image here someday', '', _elm_lang$core$Dict$empty),
-	_1: _elm_lang$core$Platform_Cmd$none
+	_1: _user$project$Proc$dropImage('dropbox')
 };
 var _user$project$Proc$Face = {ctor: 'Face'};
 var _user$project$Proc$Text = {ctor: 'Text'};
@@ -9227,7 +9227,14 @@ var _user$project$Proc$view = function (model) {
 							_1: {
 								ctor: '::',
 								_0: _elm_lang$html$Html_Attributes$id('dropbox'),
-								_1: {ctor: '[]'}
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html_Events$on,
+										'dragenter',
+										_elm_lang$core$Json_Decode$succeed(_user$project$Proc$Drop)),
+									_1: {ctor: '[]'}
+								}
 							}
 						}
 					}
@@ -9240,11 +9247,7 @@ var _user$project$Proc$view = function (model) {
 		{
 			ctor: '::',
 			_0: _elm_lang$html$Html_Attributes$class('meow'),
-			_1: {
-				ctor: '::',
-				_0: _elm_lang$html$Html_Events$onMouseOver(_user$project$Proc$Drop),
-				_1: {ctor: '[]'}
-			}
+			_1: {ctor: '[]'}
 		},
 		{
 			ctor: '::',
