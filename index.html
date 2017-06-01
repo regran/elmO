@@ -23,6 +23,14 @@
                 evt.preventDefault();
             };   
         });
+
+        app.ports.drop.subscribe(function(id){
+            var db = document.getElementById(id);
+            db.ondrop = function(evt){
+                improc(evt.dataTransfer.files[0]);
+            };
+        });
+
 	app.ports.getImage.subscribe(function(id){
             var node = document.getElementById(id);
             if (node===null){

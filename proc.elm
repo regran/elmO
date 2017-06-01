@@ -43,11 +43,14 @@ type Msg =
     ViewChange View
     | Get
     | Drop
+    | Replace
     | Upload Image
     | Read String
+    | Chill
 
 port getImage : String->Cmd msg 
 port dropImage : String->Cmd msg
+port drop : String->Cmd msg
 
 update: Msg -> Model -> (Model, Cmd msg)
 update msg model =
@@ -66,10 +69,16 @@ update msg model =
             (model, getImage "file")
         Drop ->
             (model, dropImage "dropbox")
+
+        Replace ->
+            (model, drop "dropbox")
+
         Upload data ->
             ({model|img = Just (Image data.contents data.name)}, Cmd.none)
         Read s ->
             ({model|content=s}, Cmd.none)
+        Chill ->
+            (model, Cmd.none)
 
 ---VIEW---
 
@@ -79,7 +88,7 @@ view model =
                 Nothing ->
                     Html.label [Html.Attributes.for "file", Html.Attributes.class "dropbox", Html.Attributes.id "dropbox"] []
                 Just i->
-                    Html.img [Html.Attributes.class "image", Html.Attributes.src i.contents, Html.Attributes.title i.name, Html.Attributes.id "dropbox", Html.Events.on "dragenter" (JD.succeed Drop)] []
+                    Html.img [Html.Attributes.class "image", Html.Attributes.src i.contents, Html.Attributes.title i.name, Html.Attributes.id "dropbox", Html.Events.onWithOptions "drop" options (JD.succeed Replace), Html.Events.onWithOptions "dragenter" options (JD.succeed Chill), Html.Events.onWithOptions "dragover" options (JD.succeed Chill)] []
     in
         Html.div [Html.Attributes.class "meow"]
         [Html.div [Html.Attributes.class "container"]  
@@ -101,6 +110,9 @@ view model =
 headerButton: String->Msg->Model->Html.Html Msg
 headerButton s m model=
     Html.button [Html.Attributes.class "headbutt", Html.Events.onClick (m)] [Html.text s]
+
+options: Html.Events.Options
+options = Html.Events.Options False True
 
 --SUBSCRIPTIONS
 

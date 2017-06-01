@@ -9033,6 +9033,7 @@ var _elm_lang$http$Http$StringPart = F2(
 	});
 var _elm_lang$http$Http$stringPart = _elm_lang$http$Http$StringPart;
 
+var _user$project$Proc$options = A2(_elm_lang$html$Html_Events$Options, false, true);
 var _user$project$Proc$headerButton = F3(
 	function (s, m, model) {
 		return A2(
@@ -9059,6 +9060,11 @@ var _user$project$Proc$getImage = _elm_lang$core$Native_Platform.outgoingPort(
 	});
 var _user$project$Proc$dropImage = _elm_lang$core$Native_Platform.outgoingPort(
 	'dropImage',
+	function (v) {
+		return v;
+	});
+var _user$project$Proc$drop = _elm_lang$core$Native_Platform.outgoingPort(
+	'drop',
 	function (v) {
 		return v;
 	});
@@ -9137,6 +9143,12 @@ var _user$project$Proc$update = F2(
 					_0: model,
 					_1: _user$project$Proc$dropImage('dropbox')
 				};
+			case 'Replace':
+				return {
+					ctor: '_Tuple2',
+					_0: model,
+					_1: _user$project$Proc$drop('dropbox')
+				};
 			case 'Upload':
 				var _p2 = _p0._0;
 				return {
@@ -9149,7 +9161,7 @@ var _user$project$Proc$update = F2(
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
-			default:
+			case 'Read':
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
@@ -9157,6 +9169,8 @@ var _user$project$Proc$update = F2(
 						{content: _p0._0}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
+			default:
+				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 		}
 	});
 var _user$project$Proc$Wait = {ctor: 'Wait'};
@@ -9168,6 +9182,7 @@ var _user$project$Proc$init = {
 var _user$project$Proc$Face = {ctor: 'Face'};
 var _user$project$Proc$Text = {ctor: 'Text'};
 var _user$project$Proc$Label = {ctor: 'Label'};
+var _user$project$Proc$Chill = {ctor: 'Chill'};
 var _user$project$Proc$Read = function (a) {
 	return {ctor: 'Read', _0: a};
 };
@@ -9186,6 +9201,7 @@ var _user$project$Proc$subscriptions = function (model) {
 			}
 		});
 };
+var _user$project$Proc$Replace = {ctor: 'Replace'};
 var _user$project$Proc$Drop = {ctor: 'Drop'};
 var _user$project$Proc$Get = {ctor: 'Get'};
 var _user$project$Proc$ViewChange = function (a) {
@@ -9229,11 +9245,28 @@ var _user$project$Proc$view = function (model) {
 								_0: _elm_lang$html$Html_Attributes$id('dropbox'),
 								_1: {
 									ctor: '::',
-									_0: A2(
-										_elm_lang$html$Html_Events$on,
-										'dragenter',
-										_elm_lang$core$Json_Decode$succeed(_user$project$Proc$Drop)),
-									_1: {ctor: '[]'}
+									_0: A3(
+										_elm_lang$html$Html_Events$onWithOptions,
+										'drop',
+										_user$project$Proc$options,
+										_elm_lang$core$Json_Decode$succeed(_user$project$Proc$Replace)),
+									_1: {
+										ctor: '::',
+										_0: A3(
+											_elm_lang$html$Html_Events$onWithOptions,
+											'dragenter',
+											_user$project$Proc$options,
+											_elm_lang$core$Json_Decode$succeed(_user$project$Proc$Chill)),
+										_1: {
+											ctor: '::',
+											_0: A3(
+												_elm_lang$html$Html_Events$onWithOptions,
+												'dragover',
+												_user$project$Proc$options,
+												_elm_lang$core$Json_Decode$succeed(_user$project$Proc$Chill)),
+											_1: {ctor: '[]'}
+										}
+									}
 								}
 							}
 						}
