@@ -1,0 +1,450 @@
+var _regran$elmo$Response$isSafe = function (f) {
+	var _p0 = f;
+	switch (_p0.ctor) {
+		case 'Label':
+			return false;
+		case 'Text':
+			return false;
+		case 'Face':
+			return false;
+		case 'Safe':
+			return true;
+		default:
+			return false;
+	}
+};
+var _regran$elmo$Response$isFace = function (f) {
+	var _p1 = f;
+	switch (_p1.ctor) {
+		case 'Label':
+			return false;
+		case 'Text':
+			return false;
+		case 'Face':
+			return true;
+		case 'Safe':
+			return false;
+		default:
+			return false;
+	}
+};
+var _regran$elmo$Response$isText = function (f) {
+	var _p2 = f;
+	switch (_p2.ctor) {
+		case 'Label':
+			return false;
+		case 'Text':
+			return true;
+		case 'Face':
+			return false;
+		case 'Safe':
+			return false;
+		default:
+			return false;
+	}
+};
+var _regran$elmo$Response$isLabel = function (f) {
+	var _p3 = f;
+	switch (_p3.ctor) {
+		case 'Label':
+			return true;
+		case 'Text':
+			return false;
+		case 'Face':
+			return false;
+		case 'Safe':
+			return false;
+		default:
+			return false;
+	}
+};
+var _regran$elmo$Response$safes = _elm_lang$core$List$filter(_regran$elmo$Response$isSafe);
+var _regran$elmo$Response$texts = _elm_lang$core$List$filter(_regran$elmo$Response$isText);
+var _regran$elmo$Response$faces = _elm_lang$core$List$filter(_regran$elmo$Response$isFace);
+var _regran$elmo$Response$labels = _elm_lang$core$List$filter(_regran$elmo$Response$isLabel);
+var _regran$elmo$Response$rectBar = function (s) {
+	return A2(
+		_elm_lang$svg$Svg$svg,
+		{
+			ctor: '::',
+			_0: _elm_lang$svg$Svg_Attributes$height('20'),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$svg$Svg_Attributes$width('100%'),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$svg$Svg_Attributes$preserveAspectRatio('none'),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$svg$Svg_Attributes$viewBox('0 0 110 20'),
+						_1: {ctor: '[]'}
+					}
+				}
+			}
+		},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$svg$Svg$rect,
+				{
+					ctor: '::',
+					_0: _elm_lang$svg$Svg_Attributes$fill('#E0E0E0'),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$svg$Svg_Attributes$x('0'),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$svg$Svg_Attributes$y('0'),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$svg$Svg_Attributes$width('100'),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$svg$Svg_Attributes$height('10'),
+									_1: {ctor: '[]'}
+								}
+							}
+						}
+					}
+				},
+				{ctor: '[]'}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$svg$Svg$rect,
+					{
+						ctor: '::',
+						_0: _elm_lang$svg$Svg_Attributes$fill('#4CAF50'),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$svg$Svg_Attributes$x('0'),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$svg$Svg_Attributes$y('0'),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$svg$Svg_Attributes$width(s),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$svg$Svg_Attributes$height('10'),
+										_1: {ctor: '[]'}
+									}
+								}
+							}
+						}
+					},
+					{ctor: '[]'}),
+				_1: {ctor: '[]'}
+			}
+		});
+};
+var _regran$elmo$Response$safefaceHelper = F2(
+	function (s, n) {
+		return {
+			ctor: '::',
+			_0: _elm_lang$html$Html$text(s),
+			_1: {
+				ctor: '::',
+				_0: _regran$elmo$Response$rectBar(
+					_elm_lang$core$Basics$toString(n * 20)),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$div,
+						{ctor: '[]'},
+						{ctor: '[]'}),
+					_1: {ctor: '[]'}
+				}
+			}
+		};
+	});
+var _regran$elmo$Response$drawFeat = function (f) {
+	var content = function () {
+		var _p4 = f;
+		switch (_p4.ctor) {
+			case 'Label':
+				var _p5 = _p4._1;
+				return {
+					ctor: '::',
+					_0: _elm_lang$html$Html$text(_p4._0),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$span,
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$style(
+									{
+										ctor: '::',
+										_0: {ctor: '_Tuple2', _0: 'float', _1: 'right'},
+										_1: {ctor: '[]'}
+									}),
+								_1: {ctor: '[]'}
+							},
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html$text(
+									A2(
+										_elm_lang$core$String$append,
+										_elm_lang$core$Basics$toString(
+											_elm_lang$core$Basics$round(100 * _p5)),
+										'%')),
+								_1: {ctor: '[]'}
+							}),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$div,
+								{ctor: '[]'},
+								{ctor: '[]'}),
+							_1: {
+								ctor: '::',
+								_0: _regran$elmo$Response$rectBar(
+									_elm_lang$core$Basics$toString(100 * _p5)),
+								_1: {ctor: '[]'}
+							}
+						}
+					}
+				};
+			case 'Text':
+				return {
+					ctor: '::',
+					_0: _elm_lang$html$Html$text(_p4._0),
+					_1: {ctor: '[]'}
+				};
+			case 'Face':
+				return A2(
+					_elm_lang$core$List$append,
+					A2(_regran$elmo$Response$safefaceHelper, 'Joy: ', _p4._0),
+					A2(
+						_elm_lang$core$List$append,
+						A2(_regran$elmo$Response$safefaceHelper, 'Sorrow: ', _p4._1),
+						A2(_regran$elmo$Response$safefaceHelper, 'Anger: ', _p4._2)));
+			case 'Safe':
+				return A2(
+					_elm_lang$core$List$append,
+					A2(_regran$elmo$Response$safefaceHelper, 'Adult: ', _p4._0),
+					A2(
+						_elm_lang$core$List$append,
+						A2(_regran$elmo$Response$safefaceHelper, 'Medical: ', _p4._1),
+						A2(_regran$elmo$Response$safefaceHelper, 'Violence: ', _p4._2)));
+			default:
+				return {
+					ctor: '::',
+					_0: _elm_lang$html$Html$text('FAILED'),
+					_1: {ctor: '[]'}
+				};
+		}
+	}();
+	return {
+		ctor: '::',
+		_0: A2(
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$style(
+					{
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: 'width', _1: '100%'},
+						_1: {ctor: '[]'}
+					}),
+				_1: {ctor: '[]'}
+			},
+			content),
+		_1: {ctor: '[]'}
+	};
+};
+var _regran$elmo$Response$deString = function (j) {
+	return A4(
+		_elm_lang$core$Regex$replace,
+		_elm_lang$core$Regex$All,
+		_elm_lang$core$Regex$regex('\\\\'),
+		function (_p6) {
+			return '\\';
+		},
+		A4(
+			_elm_lang$core$Regex$replace,
+			_elm_lang$core$Regex$All,
+			_elm_lang$core$Regex$regex('}\"'),
+			function (_p7) {
+				return '}';
+			},
+			A4(
+				_elm_lang$core$Regex$replace,
+				_elm_lang$core$Regex$All,
+				_elm_lang$core$Regex$regex('\"{'),
+				function (_p8) {
+					return '{';
+				},
+				j)));
+};
+var _regran$elmo$Response$Feature = F2(
+	function (a, b) {
+		return {feat: a, traits: b};
+	});
+var _regran$elmo$Response$Stuff = F8(
+	function (a, b, c, d, e, f, g, h) {
+		return {desc: a, conf: b, joy: c, mad: d, sad: e, med: f, vio: g, adult: h};
+	});
+var _regran$elmo$Response$featresult = function (v) {
+	var _p9 = v;
+	if (_p9.ctor === 'Err') {
+		return {
+			ctor: '::',
+			_0: A2(
+				_regran$elmo$Response$Feature,
+				'FAILED',
+				A8(_regran$elmo$Response$Stuff, _p9._0, 0, 0, 0, 0, 0, 0, 0)),
+			_1: {ctor: '[]'}
+		};
+	} else {
+		return _p9._0;
+	}
+};
+var _regran$elmo$Response$stuffresult = function (v) {
+	var _p10 = v;
+	if (_p10.ctor === 'Err') {
+		return A8(_regran$elmo$Response$Stuff, _p10._0, 0, 0, 0, 0, 0, 0, 0);
+	} else {
+		return _p10._0;
+	}
+};
+var _regran$elmo$Response$featdec = A9(
+	_elm_lang$core$Json_Decode$map8,
+	_regran$elmo$Response$Stuff,
+	_elm_lang$core$Json_Decode$oneOf(
+		{
+			ctor: '::',
+			_0: A2(_elm_lang$core$Json_Decode$field, 'description_', _elm_lang$core$Json_Decode$string),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$core$Json_Decode$succeed(''),
+				_1: {ctor: '[]'}
+			}
+		}),
+	_elm_lang$core$Json_Decode$oneOf(
+		{
+			ctor: '::',
+			_0: A2(_elm_lang$core$Json_Decode$field, 'score_', _elm_lang$core$Json_Decode$float),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$core$Json_Decode$succeed(0),
+				_1: {ctor: '[]'}
+			}
+		}),
+	_elm_lang$core$Json_Decode$oneOf(
+		{
+			ctor: '::',
+			_0: A2(_elm_lang$core$Json_Decode$field, 'joyLikelihood_', _elm_lang$core$Json_Decode$int),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$core$Json_Decode$succeed(0),
+				_1: {ctor: '[]'}
+			}
+		}),
+	_elm_lang$core$Json_Decode$oneOf(
+		{
+			ctor: '::',
+			_0: A2(_elm_lang$core$Json_Decode$field, 'angerLikelihood_', _elm_lang$core$Json_Decode$int),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$core$Json_Decode$succeed(0),
+				_1: {ctor: '[]'}
+			}
+		}),
+	_elm_lang$core$Json_Decode$oneOf(
+		{
+			ctor: '::',
+			_0: A2(_elm_lang$core$Json_Decode$field, 'sorrowLikelihood_', _elm_lang$core$Json_Decode$int),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$core$Json_Decode$succeed(0),
+				_1: {ctor: '[]'}
+			}
+		}),
+	_elm_lang$core$Json_Decode$oneOf(
+		{
+			ctor: '::',
+			_0: A2(_elm_lang$core$Json_Decode$field, 'medical_', _elm_lang$core$Json_Decode$int),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$core$Json_Decode$succeed(0),
+				_1: {ctor: '[]'}
+			}
+		}),
+	_elm_lang$core$Json_Decode$oneOf(
+		{
+			ctor: '::',
+			_0: A2(_elm_lang$core$Json_Decode$field, 'violence_', _elm_lang$core$Json_Decode$int),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$core$Json_Decode$succeed(0),
+				_1: {ctor: '[]'}
+			}
+		}),
+	_elm_lang$core$Json_Decode$oneOf(
+		{
+			ctor: '::',
+			_0: A2(_elm_lang$core$Json_Decode$field, 'adult_', _elm_lang$core$Json_Decode$int),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$core$Json_Decode$succeed(0),
+				_1: {ctor: '[]'}
+			}
+		}));
+var _regran$elmo$Response$bigdec = A3(
+	_elm_lang$core$Json_Decode$map2,
+	_regran$elmo$Response$Feature,
+	A2(_elm_lang$core$Json_Decode$field, 'attrKey', _elm_lang$core$Json_Decode$string),
+	A2(
+		_elm_lang$core$Json_Decode$field,
+		'attrValue',
+		A2(
+			_elm_lang$core$Json_Decode$map,
+			function (a) {
+				return _regran$elmo$Response$stuffresult(
+					A2(_elm_lang$core$Json_Decode$decodeString, _regran$elmo$Response$featdec, a));
+			},
+			_elm_lang$core$Json_Decode$string)));
+var _regran$elmo$Response$lildec = A2(
+	_elm_lang$core$Json_Decode$field,
+	'optTypedata',
+	_elm_lang$core$Json_Decode$list(_regran$elmo$Response$bigdec));
+var _regran$elmo$Response$biggestdec = A2(
+	_elm_lang$core$Json_Decode$field,
+	'responses',
+	A2(
+		_elm_lang$core$Json_Decode$index,
+		0,
+		A2(
+			_elm_lang$core$Json_Decode$at,
+			{
+				ctor: '::',
+				_0: 'dataList',
+				_1: {ctor: '[]'}
+			},
+			_regran$elmo$Response$lildec)));
+var _regran$elmo$Response$decodeJ = function (j) {
+	return _regran$elmo$Response$featresult(
+		A2(_elm_lang$core$Json_Decode$decodeString, _regran$elmo$Response$biggestdec, j));
+};
+var _regran$elmo$Response$Failed = {ctor: 'Failed'};
+var _regran$elmo$Response$Safe = F3(
+	function (a, b, c) {
+		return {ctor: 'Safe', _0: a, _1: b, _2: c};
+	});
+var _regran$elmo$Response$Face = F3(
+	function (a, b, c) {
+		return {ctor: 'Face', _0: a, _1: b, _2: c};
+	});
+var _regran$elmo$Response$Text = function (a) {
+	return {ctor: 'Text', _0: a};
+};
+var _regran$elmo$Response$Label = F2(
+	function (a, b) {
+		return {ctor: 'Label', _0: a, _1: b};
+	});
+var _regran$elmo$Response$toFeat = function (f) {
+	return _elm_lang$core$Native_Utils.eq(f.feat, 'LABEL_DETECTION') ? A2(_regran$elmo$Response$Label, f.traits.desc, f.traits.conf) : (_elm_lang$core$Native_Utils.eq(f.feat, 'TEXT_DETECTION') ? _regran$elmo$Response$Text(f.traits.desc) : (_elm_lang$core$Native_Utils.eq(f.feat, 'FACE_DETECTION') ? A3(_regran$elmo$Response$Face, f.traits.joy, f.traits.sad, f.traits.mad) : (_elm_lang$core$Native_Utils.eq(f.feat, 'SAFE_SEARCH_DETECTION') ? A3(_regran$elmo$Response$Safe, f.traits.adult, f.traits.med, f.traits.vio) : _regran$elmo$Response$Failed)));
+};
+var _regran$elmo$Response$toFeatlist = _elm_lang$core$List$map(_regran$elmo$Response$toFeat);

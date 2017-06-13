@@ -50,32 +50,45 @@
                 app.ports.fileContentRead.send(data);
                 var form = new FormData();
 				var CEConfigParam = new Object();
-				var gcvFeatures = [1,2,3];				
-				CEConfigParam["previewGenType"]="16384";
+				var gcvFeatures = [1,2,3,4,5,6,7,9,10];				
+				CEConfigParam["previewGenType"]=16384;
 				var subOpType =new Object();
 				subOpType["gcvFeatures"]=gcvFeatures;
 				CEConfigParam["subOpType"]=subOpType;
+				CEConfigParam["reqParamMap"]= [{ "attrKey":"synchronous","attrValue":"true"}]
                 form.append("CEConfigParams", JSON.stringify(CEConfigParam));
-                form.append("file", file);
-                var settings = {
-                    "async": true,
-                    "crossDomain": true,
-                    "url": "http://172.24.50.188:22001/CvContentPreviewGenApp/rest/messagequeue/DoAnalysis",
-                    "method": "POST",
-                    "headers": {},
-                    "processData": false,
-                    "contentType": false,
-                    "mimeType": "multipart/form-data",
-                    "data": form
-                }
+				
 
-                $.ajax(settings).done(function (response) {
-                   app.ports.jsonresponse.send(response);
-                });
+
+
+                form.append("file", file);
+		$.ajax({
+			async : true,
+			crossDomain : false,
+			url : "http://172.24.50.188:22001/CvContentPreviewGenApp/rest/messagequeue/DoAnalysis",
+			method : "POST",
+			type: "POST",
+			headers : {},
+			processData : false,
+			contentType : false,			
+			mimeType : "multipart/form-data;charset=UTF-8",
+			data : form,
+			success : function(response, status, request) {				
+				console.log("done");
+				if (response) {
+				
+					var respJson= JSON.parse(response); 
+					app.ports.jsonresponse.send(response);
+					}
+				},
+			error : function(e) {
+				console.log("error");
+			}
             });
-            reader.readAsDataURL(file);
-        }
-	
+            
+        });
+		reader.readAsDataURL(file);
+	}
 </script>
 </body>
 </html>

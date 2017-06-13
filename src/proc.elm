@@ -1,5 +1,5 @@
 port module Proc exposing (..)
-
+import Response exposing (..)
 import Html
 import Html.Attributes
 import Html.Events
@@ -21,9 +21,8 @@ main =
 type alias Model = 
     {img: Maybe Image,
     view: View,
-    content: String,
-    desc: String,
-    pix: Dict String String
+    content: List Feat,
+    curcontent: List Feat
     }
                 
                 
@@ -36,6 +35,7 @@ type View =
     Label
     | Text
     | Face
+    | Safe
     | Wait
 
 ---UPDATE
@@ -58,13 +58,15 @@ update msg model =
         ViewChange v ->
             case v of
                 Label ->
-                    ({model|content = "A label"}, Cmd.none)
+                    ({model|curcontent = labels model.content}, Cmd.none)
                 Text -> 
-                    ({model|content = "Some text"}, Cmd.none)
+                    ({model|curcontent = texts model.content}, Cmd.none)
                 Face ->
-                    ({model|content = "A face"}, Cmd.none)
+                    ({model|curcontent = faces model.content}, Cmd.none)
+                Safe ->
+                    ({model|curcontent = safes model.content}, Cmd.none)
                 Wait ->
-                    ({model|content = "Waiting"}, Cmd.none)
+                    (model, Cmd.none)
         Get ->
             (model, getImage "file")
         Drop ->
@@ -74,9 +76,9 @@ update msg model =
             (model, drop "dropbox")
 
         Upload data ->
-            ({model|img = Just (Image data.contents data.name)}, Cmd.none)
+            (Model (Just (Image data.contents data.name)) model.view model.content [Response.Text "Waiting..."], Cmd.none)
         Read s ->
-            ({model|content=s}, Cmd.none)
+            (Model model.img model.view (toFeatlist (decodeJ s)) [Response.Text "Image data available"], Cmd.none)
         Chill ->
             (model, Cmd.none)
 
@@ -100,8 +102,11 @@ view model =
         Html.div [Html.Attributes.class "head"] [
         headerButton "Label" (ViewChange Label) model, 
         headerButton "Text" (ViewChange Text) model,
-        headerButton "Face" (ViewChange Face) model],
-        Html.div [Html.Attributes.class "body"]  [Html.text model.content],
+        headerButton "Face" (ViewChange Face) model,
+        headerButton "Safe Search" (ViewChange Safe) model
+        ],
+        Html.div [Html.Attributes.class "body"]  (List.foldr (List.append) [] (List.map drawFeat (model.curcontent))),
+        ---Html.div [Html.Attributes.class "body"] [Html.text (model.test)],
         Html.node "link" [ Html.Attributes.rel "stylesheet", Html.Attributes.href "style.css" ] []]]
 
 
@@ -125,4 +130,4 @@ subscriptions model =
 
 --INIT--
 init: (Model, Cmd msg)
-init = (Model (Nothing) (Wait) "There will be attribute descriptions or a prompt for an image here someday" "" Dict.empty, dropImage "dropbox")
+init = (Model (Nothing) (Wait) [] [Response.Text "Select an image"], dropImage "dropbox")

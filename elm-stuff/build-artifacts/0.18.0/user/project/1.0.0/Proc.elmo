@@ -1,0 +1,417 @@
+var _user$project$Proc$options = A2(_elm_lang$html$Html_Events$Options, false, true);
+var _user$project$Proc$headerButton = F3(
+	function (s, m, model) {
+		return A2(
+			_elm_lang$html$Html$button,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('headbutt'),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$html$Html_Events$onClick(m),
+					_1: {ctor: '[]'}
+				}
+			},
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html$text(s),
+				_1: {ctor: '[]'}
+			});
+	});
+var _user$project$Proc$getImage = _elm_lang$core$Native_Platform.outgoingPort(
+	'getImage',
+	function (v) {
+		return v;
+	});
+var _user$project$Proc$dropImage = _elm_lang$core$Native_Platform.outgoingPort(
+	'dropImage',
+	function (v) {
+		return v;
+	});
+var _user$project$Proc$drop = _elm_lang$core$Native_Platform.outgoingPort(
+	'drop',
+	function (v) {
+		return v;
+	});
+var _user$project$Proc$fileContentRead = _elm_lang$core$Native_Platform.incomingPort(
+	'fileContentRead',
+	A2(
+		_elm_lang$core$Json_Decode$andThen,
+		function (contents) {
+			return A2(
+				_elm_lang$core$Json_Decode$andThen,
+				function (name) {
+					return _elm_lang$core$Json_Decode$succeed(
+						{contents: contents, name: name});
+				},
+				A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string));
+		},
+		A2(_elm_lang$core$Json_Decode$field, 'contents', _elm_lang$core$Json_Decode$string)));
+var _user$project$Proc$jsonresponse = _elm_lang$core$Native_Platform.incomingPort('jsonresponse', _elm_lang$core$Json_Decode$string);
+var _user$project$Proc$Model = F5(
+	function (a, b, c, d, e) {
+		return {img: a, view: b, content: c, desc: d, pix: e};
+	});
+var _user$project$Proc$Image = F2(
+	function (a, b) {
+		return {contents: a, name: b};
+	});
+var _user$project$Proc$update = F2(
+	function (msg, model) {
+		var _p0 = msg;
+		switch (_p0.ctor) {
+			case 'ViewChange':
+				var _p1 = _p0._0;
+				switch (_p1.ctor) {
+					case 'Label':
+						return {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{content: 'A label'}),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
+					case 'Text':
+						return {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{content: 'Some text'}),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
+					case 'Face':
+						return {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{content: 'A face'}),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
+					case 'Safe':
+						return {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{content: 'Safe search'}),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
+					default:
+						return {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{content: 'Waiting'}),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
+				}
+			case 'Get':
+				return {
+					ctor: '_Tuple2',
+					_0: model,
+					_1: _user$project$Proc$getImage('file')
+				};
+			case 'Drop':
+				return {
+					ctor: '_Tuple2',
+					_0: model,
+					_1: _user$project$Proc$dropImage('dropbox')
+				};
+			case 'Replace':
+				return {
+					ctor: '_Tuple2',
+					_0: model,
+					_1: _user$project$Proc$drop('dropbox')
+				};
+			case 'Upload':
+				var _p2 = _p0._0;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							img: _elm_lang$core$Maybe$Just(
+								A2(_user$project$Proc$Image, _p2.contents, _p2.name))
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'Read':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{content: _p0._0}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			default:
+				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+		}
+	});
+var _user$project$Proc$Wait = {ctor: 'Wait'};
+var _user$project$Proc$init = {
+	ctor: '_Tuple2',
+	_0: A5(_user$project$Proc$Model, _elm_lang$core$Maybe$Nothing, _user$project$Proc$Wait, 'There will be attribute descriptions or a prompt for an image here someday', '', _elm_lang$core$Dict$empty),
+	_1: _user$project$Proc$dropImage('dropbox')
+};
+var _user$project$Proc$Safe = {ctor: 'Safe'};
+var _user$project$Proc$Face = {ctor: 'Face'};
+var _user$project$Proc$Text = {ctor: 'Text'};
+var _user$project$Proc$Label = {ctor: 'Label'};
+var _user$project$Proc$Chill = {ctor: 'Chill'};
+var _user$project$Proc$Read = function (a) {
+	return {ctor: 'Read', _0: a};
+};
+var _user$project$Proc$Upload = function (a) {
+	return {ctor: 'Upload', _0: a};
+};
+var _user$project$Proc$subscriptions = function (model) {
+	return _elm_lang$core$Platform_Sub$batch(
+		{
+			ctor: '::',
+			_0: _user$project$Proc$fileContentRead(_user$project$Proc$Upload),
+			_1: {
+				ctor: '::',
+				_0: _user$project$Proc$jsonresponse(_user$project$Proc$Read),
+				_1: {ctor: '[]'}
+			}
+		});
+};
+var _user$project$Proc$Replace = {ctor: 'Replace'};
+var _user$project$Proc$Drop = {ctor: 'Drop'};
+var _user$project$Proc$Get = {ctor: 'Get'};
+var _user$project$Proc$ViewChange = function (a) {
+	return {ctor: 'ViewChange', _0: a};
+};
+var _user$project$Proc$view = function (model) {
+	var viewImg = function () {
+		var _p3 = model.img;
+		if (_p3.ctor === 'Nothing') {
+			return A2(
+				_elm_lang$html$Html$label,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$for('file'),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$class('dropbox'),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$id('dropbox'),
+							_1: {ctor: '[]'}
+						}
+					}
+				},
+				{ctor: '[]'});
+		} else {
+			var _p4 = _p3._0;
+			return A2(
+				_elm_lang$html$Html$img,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$class('image'),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$src(_p4.contents),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$title(_p4.name),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$id('dropbox'),
+								_1: {
+									ctor: '::',
+									_0: A3(
+										_elm_lang$html$Html_Events$onWithOptions,
+										'drop',
+										_user$project$Proc$options,
+										_elm_lang$core$Json_Decode$succeed(_user$project$Proc$Replace)),
+									_1: {
+										ctor: '::',
+										_0: A3(
+											_elm_lang$html$Html_Events$onWithOptions,
+											'dragenter',
+											_user$project$Proc$options,
+											_elm_lang$core$Json_Decode$succeed(_user$project$Proc$Chill)),
+										_1: {
+											ctor: '::',
+											_0: A3(
+												_elm_lang$html$Html_Events$onWithOptions,
+												'dragover',
+												_user$project$Proc$options,
+												_elm_lang$core$Json_Decode$succeed(_user$project$Proc$Chill)),
+											_1: {ctor: '[]'}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				{ctor: '[]'});
+		}
+	}();
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class('meow'),
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$div,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$class('container'),
+					_1: {ctor: '[]'}
+				},
+				{
+					ctor: '::',
+					_0: viewImg,
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$div,
+							{ctor: '[]'},
+							{ctor: '[]'}),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$input,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$type_('file'),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$id('file'),
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$hidden(true),
+											_1: {
+												ctor: '::',
+												_0: A2(
+													_elm_lang$html$Html_Events$on,
+													'change',
+													_elm_lang$core$Json_Decode$succeed(_user$project$Proc$Get)),
+												_1: {ctor: '[]'}
+											}
+										}
+									}
+								},
+								{ctor: '[]'}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$label,
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$for('file'),
+										_1: {
+											ctor: '::',
+											_0: A2(
+												_elm_lang$html$Html_Events$on,
+												'change',
+												_elm_lang$core$Json_Decode$succeed(_user$project$Proc$Get)),
+											_1: {
+												ctor: '::',
+												_0: _elm_lang$html$Html_Attributes$class('choosebutt'),
+												_1: {ctor: '[]'}
+											}
+										}
+									},
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html$text('Choose File'),
+										_1: {ctor: '[]'}
+									}),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$div,
+										{ctor: '[]'},
+										{ctor: '[]'}),
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_elm_lang$html$Html$div,
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html_Attributes$class('head'),
+												_1: {ctor: '[]'}
+											},
+											{
+												ctor: '::',
+												_0: A3(
+													_user$project$Proc$headerButton,
+													'Label',
+													_user$project$Proc$ViewChange(_user$project$Proc$Label),
+													model),
+												_1: {
+													ctor: '::',
+													_0: A3(
+														_user$project$Proc$headerButton,
+														'Text',
+														_user$project$Proc$ViewChange(_user$project$Proc$Text),
+														model),
+													_1: {
+														ctor: '::',
+														_0: A3(
+															_user$project$Proc$headerButton,
+															'Face',
+															_user$project$Proc$ViewChange(_user$project$Proc$Face),
+															model),
+														_1: {
+															ctor: '::',
+															_0: A3(
+																_user$project$Proc$headerButton,
+																'Safe Search',
+																_user$project$Proc$ViewChange(_user$project$Proc$Safe),
+																model),
+															_1: {ctor: '[]'}
+														}
+													}
+												}
+											}),
+										_1: {
+											ctor: '::',
+											_0: A2(
+												_elm_lang$html$Html$div,
+												{
+													ctor: '::',
+													_0: _elm_lang$html$Html_Attributes$class('body'),
+													_1: {ctor: '[]'}
+												},
+												{
+													ctor: '::',
+													_0: _elm_lang$html$Html$text(model.content),
+													_1: {ctor: '[]'}
+												}),
+											_1: {
+												ctor: '::',
+												_0: A3(
+													_elm_lang$html$Html$node,
+													'link',
+													{
+														ctor: '::',
+														_0: _elm_lang$html$Html_Attributes$rel('stylesheet'),
+														_1: {
+															ctor: '::',
+															_0: _elm_lang$html$Html_Attributes$href('style.css'),
+															_1: {ctor: '[]'}
+														}
+													},
+													{ctor: '[]'}),
+												_1: {ctor: '[]'}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}),
+			_1: {ctor: '[]'}
+		});
+};
+var _user$project$Proc$main = _elm_lang$html$Html$program(
+	{init: _user$project$Proc$init, view: _user$project$Proc$view, update: _user$project$Proc$update, subscriptions: _user$project$Proc$subscriptions})();
